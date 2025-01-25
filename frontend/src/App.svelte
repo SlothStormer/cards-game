@@ -9,7 +9,7 @@
   }
 </script>
 
-<div>
+<div class="flex flex-col h-full">
   <nav class="flex justify-center">
     <div class="flex flex-row gap-2">
       <button

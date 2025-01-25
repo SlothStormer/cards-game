@@ -12,7 +12,7 @@
     {#each Array(gameState.rows) as _, i}
         <div class="flex flex-row gap-1">
             {#each Array(gameState.cols) as _, j}
-                <Card data={gameState.data[i][j]?.value} />
+                <Card data={gameState.data[i][j]} size="small" />
             {/each}
         </div>
     {/each}

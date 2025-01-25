@@ -23,7 +23,7 @@
 </script>
 
 <main
-    class="flex flex-row items-center justify-stretch h-screen w-screen max-h-full max-w-screen"
+    class="flex flex-row items-center justify-stretch h-full w-screen max-h-full max-w-screen"
 >
     <Board />
     <div
@@ -33,6 +33,7 @@
             <Card
                 data={globalState.focusedCard}
                 hoverable={false}
+                size="large"
             />
             <div class="bg-gray-950">Hola</div>
         </div>
