@@ -1,95 +1,19 @@
 <script lang="ts">
-    import { globalState } from "../../state/state.svelte";
+    import { gameState } from "../../state/state.svelte";
+    import Card from "./Card.svelte";
 
-    let sides = 2;
-    let rows = 2;
-    let cols = 5;
-
-    function drawCard() {
-        console.log("draw card");
-        globalState.cards.push({
-            value: "Carta " + globalState.cards.length,
-            type: ["Insecto", "Normal", "Efecto"],
-            suit: "H",
-        });
-        console.log(globalState.cards);
-    }
+    console.log(gameState.cols);
+    console.log(gameState.rows);
 </script>
 
 <div
-    class="flex flex-col gap-4 items-center justify-center border-2 border-neutral-500 bg-purple-950 rounded-md p-6 basis-3/4"
+    class="flex flex-col gap-1 items-center justify-center bg-purple-950 p-6 basis-1/3"
 >
-    {#each Array(sides) as _, i}
-        <div class="flex flex-row gap-6 items-center justify-center">
-            {#if i === 0}
-                <div class="flex flex-col gap-2">
-                    <div
-                        class="h-36 w-24 bg-neutral-700 border rounded-md text-white text-center"
-                        onclick={drawCard}
-                        aria-hidden="true"
-                    >
-                        Mazo
-                    </div>
-                    <div
-                        class="h-36 w-24 bg-neutral-700 border rounded-md text-white text-center"
-                    >
-                        Cementerio
-                    </div>
-                </div>
-            {:else}
-                <div class="flex flex-col gap-2">
-                    <div
-                        class="h-36 w-24 bg-neutral-700 border rounded-md text-white text-center"
-                    >
-                        Clima
-                    </div>
-                    <div
-                        class="h-36 w-24 bg-neutral-700 border rounded-md text-white text-center"
-                    >
-                        Campo
-                    </div>
-                </div>
-            {/if}
-            <div class="flex flex-col gap-2">
-                {#each Array(rows) as _, i}
-                    <div class="flex flex-row gap-2">
-                        {#each Array(cols) as _, j}
-                            <div
-                                class="h-36 w-24 bg-neutral-800 border rounded-md text-white text-center"
-                            ></div>
-                        {/each}
-                    </div>
-                {/each}
-            </div>
-            {#if i === 1}
-                <div class="flex flex-col gap-2">
-                    <div
-                        class="h-36 w-24 bg-neutral-700 border rounded-md text-white text-center"
-                        onclick={drawCard}
-                        aria-hidden="true"
-                    >
-                        Mazo
-                    </div>
-                    <div
-                        class="h-36 w-24 bg-neutral-700 border rounded-md text-white text-center"
-                    >
-                        Cementerio
-                    </div>
-                </div>
-            {:else}
-                <div class="flex flex-col gap-2">
-                    <div
-                        class="h-36 w-24 bg-neutral-700 border rounded-md text-white text-center"
-                    >
-                        Clima
-                    </div>
-                    <div
-                        class="h-36 w-24 bg-neutral-700 border rounded-md text-white text-center"
-                    >
-                        Campo
-                    </div>
-                </div>
-            {/if}
+    {#each Array(gameState.rows) as _, i}
+        <div class="flex flex-row gap-1">
+            {#each Array(gameState.cols) as _, j}
+                <Card data={gameState.data[i][j]?.value} />
+            {/each}
         </div>
     {/each}
 </div>

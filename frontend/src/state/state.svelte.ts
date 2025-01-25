@@ -1,4 +1,5 @@
-export const globalState = {
+export const globalState = $state({
+    focusedCard: "",
     serverIP: "http://localhost:3000",
     username: "Sloth",
     page: "home",
@@ -18,4 +19,82 @@ export const globalState = {
         { value: "Carta 5", type: ["Insecto", "Normal", "Efecto"], suit: "H" },
         { value: "Carta 6", type: ["Insecto", "Normal", "Efecto"], suit: "H" },
     ]
-}
+});
+
+export const playerState = $state({
+    username: "Sloth",
+    cards: [...globalState.cards],
+});
+
+export const gameState = $state({
+    player1: "",
+    player2: "",
+    turn: 1,
+    rows: 6,
+    cols: 7,
+    data: [
+        [
+            { value: "Desterrados" },
+            { value: "", },
+            { value: "", },
+            { value: "", },
+            { value: "", },
+            { value: "", },
+            { value: "Clima" },
+        ],
+        [
+            { value: "Mazo" },
+            { value: "", },
+            { value: "", },
+            { value: "", },
+            { value: "", },
+            { value: "", },
+            { value: "Campo" },
+        ],
+        [
+            { value: "Cementerio" },
+            { value: "", },
+            { value: "", },
+            { value: "", },
+            { value: "", },
+            { value: "", },
+            { value: "Extra Deck" },
+        ],
+        [
+            { value: "Extra Deck" },
+            { value: "", },
+            { value: "", },
+            { value: "", },
+            { value: "", },
+            { value: "", },
+            { value: "Cementerio" },
+        ],
+        [
+            { value: "Campo" },
+            { value: "", },
+            { value: "", },
+            { value: "", },
+            { value: "", },
+            { value: "", },
+            { value: "Mazo" },
+        ],
+        [
+            { value: "Clima" },
+            { value: "", },
+            { value: "", },
+            { value: "", },
+            { value: "", },
+            { value: "", },
+            { value: "Desterrados" },
+        ],
+    ]
+});
+
+type Card = {
+    value: string;
+    type: string[];
+    element: string;
+    description: string;
+    atk: number;
+    vid: number;
+};

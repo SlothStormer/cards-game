@@ -10,10 +10,24 @@
 </script>
 
 <div>
-  <nav>
-    <button onclick={() => changePage("home")}>Home</button>
-    <button onclick={() => changePage("game")}>Game</button>
-    <button onclick={() => changePage("admin")}>Admin</button>
+  <nav class="flex justify-center">
+    <div class="flex flex-row gap-2">
+      <button
+        onclick={() => changePage("home")}
+        class="bg-gray-500 p-2 rounded-md hover:bg-gray-700 cursor-pointer"
+        >Home</button
+      >
+      <button
+        onclick={() => changePage("game")}
+        class="bg-gray-500 p-2 rounded-md hover:bg-gray-700 cursor-pointer"
+        >Game</button
+      >
+      <button
+        onclick={() => changePage("admin")}
+        class="bg-gray-500 p-2 rounded-md hover:bg-gray-700 cursor-pointer"
+        >Admin</button
+      >
+    </div>
   </nav>
   {#if globalState.page === "home"}
     <Home bind:page={globalState.page} />

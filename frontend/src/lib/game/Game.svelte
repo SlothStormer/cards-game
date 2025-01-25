@@ -20,27 +20,22 @@
     onDestroy(() => {
         socket.close();
     });
-
-    let focusedCard = $state(globalState.cards[0]);
 </script>
 
 <main
     class="flex flex-row items-center justify-stretch h-screen w-screen max-h-full max-w-screen"
 >
-    <aside
-        class="basis-1/4 bg-gray-950 h-full flex justify-center items-center"
-    >
-        <Card
-            bind:bindableProp={focusedCard}
-            data={focusedCard}
-            hoverable={false}
-        />
-    </aside>
     <Board />
-    <aside class="basis-1/4 bg-gray-950 h-full">Hola</aside>
+    <div
+    class="basis-2/3 bg-gray-950 h-full flex flex-col justify-center items-center"
+    >
+        <div class="flex flex-row">
+            <Card
+                data={globalState.focusedCard}
+                hoverable={false}
+            />
+            <div class="bg-gray-950">Hola</div>
+        </div>
+        <Deck cards={globalState.cards} />
+    </div>
 </main>
-
-<!-- Mano -->
-{#key globalState}
-    <Deck cards={globalState.cards} bind:focusedCard />
-{/key}
