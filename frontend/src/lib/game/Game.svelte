@@ -5,6 +5,22 @@
 
     import { globalState } from "../../state/state.svelte";
 
+    import { io } from "socket.io-client";
+    import { onDestroy, onMount } from "svelte";
+
+    let socket = io(globalState.serverIP);
+
+    onMount(() => {
+        socket.emit("player-join", { username: "Sloth" });
+        socket.on("update-board", (data) => {
+            console.log("Tablero recibido:", data);
+        });
+    });
+
+    onDestroy(() => {
+        socket.close();
+    });
+
     let focusedCard = $state(globalState.cards[0]);
 </script>
 

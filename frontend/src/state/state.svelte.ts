@@ -1,4 +1,6 @@
 export const globalState = {
+    serverIP: "http://localhost:3000",
+    username: "Sloth",
     page: "home",
     cards: [
         {
@@ -14,11 +16,6 @@ export const globalState = {
         { value: "Carta 3", type: ["Insecto", "Normal", "Efecto"], suit: "H" },
         { value: "Carta 4", type: ["Insecto", "Normal", "Efecto"], suit: "H" },
         { value: "Carta 5", type: ["Insecto", "Normal", "Efecto"], suit: "H" },
-        { value: "Carta 6", type: ["Insecto", "Normal", "Efecto"], suit: "H" },
-        { value: "Carta 6", type: ["Insecto", "Normal", "Efecto"], suit: "H" },
-        { value: "Carta 6", type: ["Insecto", "Normal", "Efecto"], suit: "H" },
-        { value: "Carta 6", type: ["Insecto", "Normal", "Efecto"], suit: "H" },
-        { value: "Carta 6", type: ["Insecto", "Normal", "Efecto"], suit: "H" },
         { value: "Carta 6", type: ["Insecto", "Normal", "Efecto"], suit: "H" },
     ]
 }
