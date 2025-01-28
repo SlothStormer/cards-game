@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { globalState } from "../../state/state.svelte";
+    import { globalState, playerState } from "../../state/state.svelte";
     let ip: string = $state("");
     let username: string = $state("");
     let { page= $bindable() } = $props();
@@ -7,6 +7,7 @@
     function conectarServer() {
         console.log(ip);
         globalState.serverIP = ip;
+        playerState.username = username;
         page = "game";
     }
 </script>

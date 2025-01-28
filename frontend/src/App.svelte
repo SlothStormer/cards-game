@@ -2,7 +2,7 @@
   import Admin from "./lib/admin/Admin.svelte";
   import Game from "./lib/game/Game.svelte";
   import Home from "./lib/home/Home.svelte";
-  import { globalState } from "./state/state.svelte";
+  import { gameState, globalState } from "./state/state.svelte";
 
   function changePage(page: string) {
     globalState.page = page;
