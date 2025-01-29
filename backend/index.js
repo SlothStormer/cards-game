@@ -1,17 +1,19 @@
 import express from "express";
 import http from "http";
 import { Server } from "socket.io";
+import bodyParser from "body-parser";
+import cors from "cors";
 import connectToDatabase, { Card } from "./db.js";
 
 const app = express();
 const server = http.createServer(app);
-const io = new Server(server, {
-    cors: {
-        origin: "http://localhost:5173",
-        methods: ["GET", "POST"],
-    },
-});
+const io = new Server(server);
 
+app.use(cors());
+app.use(express.json());
+app.use(bodyParser.urlencoded({
+    extended: true
+}));
 connectToDatabase();
 
 let gameState = {
@@ -110,10 +112,11 @@ app.get("/", async (req, res) => {
     }
 });
 
-app.post("/add-card", async (req, res) => {
+app.post("/", async (req, res) => {
     try {
+        console.log(req.body);
         const card = new Card({
-            value: req.body.value,
+            title: req.body.title,
             type: req.body.type,
             element: req.body.element,
             img: req.body.img,
@@ -122,10 +125,47 @@ app.post("/add-card", async (req, res) => {
             vid: req.body.vid,
         });
         await card.save();
-        res.send("Carta agregada");
+        res.send({
+            card,
+            message: "Carta agregada",
+        });
         console.log("Carta agregada");
     } catch (error) {
         console.error("Error al agregar carta:", error);
+    }
+});
+
+app.put("/:id", async (req, res) => {
+    try {
+        const card = await Card.findById(req.params.id);
+        card.title = req.body.title;
+        card.type = req.body.type;
+        card.element = req.body.element;
+        card.img = req.body.img;
+        card.description = req.body.description;
+        card.atk = req.body.atk;
+        card.vid = req.body.vid;
+        await card.save();
+        res.send({
+            card,
+            message: "Carta actualizada",
+        });
+        console.log("Carta actualizada");
+    } catch (error) {
+        console.error("Error al actualizar carta:", error);
+    }
+});
+
+app.delete("/:id", async (req, res) => {
+    try {
+        const card = await Card.findByIdAndDelete(req.params.id);
+        res.send({
+            card,
+            message: "Carta eliminada",
+        });
+        console.log("Carta eliminada");
+    } catch (error) {
+        console.error("Error al eliminar carta:", error);
     }
 });
 

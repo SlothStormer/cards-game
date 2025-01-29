@@ -1,9 +1,20 @@
 <script lang="ts">
-    let { data } = $props();
+    let { data, previewCard = $bindable() } = $props();
+
+    function showCard() {
+        previewCard = data;
+        window.scrollTo({
+            top: 0,
+            left: 0,
+            behavior: "smooth",
+        });
+    }
 </script>
 
 <div
     class=" border border-white/50 w-72 max-w-sm bg-purple-900 shadow-lg rounded-lg overflow-hidden"
+    onclick={showCard}
+    aria-hidden="true"
 >
     <div class="relative h-48 m-2 rounded-md">
         <img src={data.img} alt="Card" class="w-full h-full object-cover rounded-md" />

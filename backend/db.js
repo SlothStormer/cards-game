@@ -4,7 +4,7 @@ import { config } from "dotenv";
 config();
 
 const CardSchema = new mongoose.Schema({
-    value: String,
+    title: String,
     type: String,
     element: String,
     img: String,
