@@ -38,6 +38,7 @@
 
     function drag(e: DragEvent) {
         if (e.dataTransfer === null) return;
+        console.log(data)
         e.dataTransfer.setData(
             "text/plain",
             JSON.stringify({ data, posX, posY }),
@@ -46,11 +47,23 @@
 
     function drop(e: DragEvent) {
         if (e.dataTransfer === null) return;
+        
         let dragInfo = JSON.parse(e.dataTransfer?.getData("text/plain"));
-        gameState.data[posY][posX] = dragInfo.data;
+        if (dragInfo.posX === posX && dragInfo.posY === posY) return;
+
+        let place = gameState.data[posY][posX];
+
+        if (Object.keys(place.card).length === 0) {
+            console.log("la zona no tiene carta")
+            gameState.data[posY][posX] = dragInfo.data;
+        }
+        else {
+            console.log("la zona tiene carta")
+            gameState.data[posY][posX].stack.push(dragInfo.data.card);
+        }
 
         if (dragInfo.posY != -1) {
-            gameState.data[dragInfo.posY][dragInfo.posX] = { value: "" };
+            gameState.data[dragInfo.posY][dragInfo.posX] = { card: {}, stack: [] };
         } else {
             playerState.cards.splice(dragInfo.posX, 1);
         }
@@ -60,23 +73,32 @@
     }
 </script>
 
-{#if size === "small"}
+<div class="relative">
+    {#if size === "small"}
+    {#if data.stack.length > 0}
+        <div class="absolute -top-2 -right-2 bg-purple-300 text-black px-2 z-10 rounded-full">
+            {data.stack.length}
+        </div>
+    {/if}
     <div class="border h-32 rounded-lg" style="aspect-ratio: 2/3;">
-        {#if data.value}
+        {#if data.card.title}
             <div
                 class="bg-fuchsia-950 h-full rounded-lg select-none"
                 onmouseenter={hover}
                 draggable={"true"}
                 ondragstart={drag}
+                ondragover={allowDrop}
+                ondragleave={dragLeave}
+                ondrop={drop}
                 aria-hidden="true"
             >
                 <div class="flex flex-col gap-2">
                     <span class="text-xs font-bold text-center overflow-hidden"
-                        >{data.value}</span
+                        >{data.card.title}</span
                     >
                     <div class="flex justify-center items-center w-full">
                         <img
-                            src={data.img}
+                            src={data.card.img}
                             alt=""
                             draggable="false"
                             class="w-16 rounded-sm"
@@ -94,11 +116,11 @@
             >
                 <div class="flex flex-col gap-2">
                     <span class="text-xs font-bold text-center overflow-hidden"
-                        >{place ? place : data.value}</span
+                        >{place ? place : data.card.title}</span
                     >
                     <div class="flex justify-center items-center w-full">
                         <img
-                            src={data.img}
+                            src={data.card.img}
                             alt=""
                             draggable="false"
                             class="w-16 rounded-sm"
@@ -127,22 +149,22 @@
                 aria-hidden="true"
             >
                 <div class="flex flex-col gap-2">
-                    <span class="text-xs">{data.value}</span>
+                    <span class="text-xs">{data.card.title}</span>
                     <div class="flex justify-between">
-                        <span class="text-xs">{data.type}</span>
-                        <span class="text-xs">{data.element}</span>
+                        <span class="text-xs">{data.card.type}</span>
+                        <span class="text-xs">{data.card.element}</span>
                     </div>
                     <div class="flex justify-center items-center w-full">
                         <img
-                            src={data.img}
+                            src={data.card.img}
                             alt=""
                             draggable="false"
                             class="w-32 rounded-sm"
                         />
                     </div>
                     <div class="flex justify-between">
-                        <span>ATK {data.atk}</span>
-                        <span>VID {data.vid}</span>
+                        <span>ATK {data.card.atk}</span>
+                        <span>VID {data.card.vid}</span>
                     </div>
                 </div>
             </div>
@@ -153,7 +175,7 @@
         {#if data}
             <div class="bg-fuchsia-950 h-full rounded-lg select-none">
                 <div class="flex flex-col gap-2">
-                    <span class="">{data.value}</span>
+                    <span class="">{data.title}</span>
                     <div class="flex justify-between">
                         <span class="">{data.type}</span>
                         <span class="">{data.element}</span>
@@ -173,3 +195,6 @@
         {/if}
     </div>
 {/if}
+
+
+</div>

@@ -25,12 +25,12 @@
       <button
         onclick={() => changePage("home")}
         class="bg-gray-500 p-2 rounded-md hover:bg-gray-700 cursor-pointer"
-        >Home</button
+        >Inicio</button
       >
       <button
         onclick={() => changePage("game")}
         class="bg-gray-500 p-2 rounded-md hover:bg-gray-700 cursor-pointer"
-        >Game</button
+        >Juego</button
       >
       <button
         onclick={() => changePage("admin")}

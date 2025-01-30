@@ -24,6 +24,12 @@
     onDestroy(() => {
         socket.close();
     });
+
+    function setSubMenuFocus(e: MouseEvent) {
+    if (e.target instanceof HTMLButtonElement) {
+        playerState.subMenuFocus = e.target.value;
+    }
+}
 </script>
 
 <main
@@ -31,15 +37,26 @@
 >
     <Board socket={socket} />
     <div
-    class="basis-2/3 bg-gray-950 h-full flex flex-col justify-center items-center"
+    class="basis-2/3 bg-gray-950 h-full flex flex-col justify-between items-center"
     >
-        <div class="flex flex-row">
-            <Card
-                data={globalState.focusedCard}
-                size="large"
-                socket={socket}
-            />
-            <div class="bg-gray-950">
+        <div class="flex flex-row h-full w-full items-center">
+            <div class="basis-1/4 flex flex-col items-center">
+                <Card
+                    data={globalState.focusedCard}
+                    size="large"
+                    socket={socket}
+                />
+            </div>
+            <div class="bg-gray-800 basis-3/4 h-full flex flex-col justify-center">
+                <div>
+                    <button value="calc" onclick={setSubMenuFocus}>Calculadora</button>
+                    <button value="apil" onclick={setSubMenuFocus}>Apiladas</button>
+                </div>
+                {#if playerState.subMenuFocus === "calc"}
+                    CALCULADORA
+                {:else if playerState.subMenuFocus === "apil"}
+                    APILADAS
+                {/if}
             </div>
         </div>
         <Deck cards={playerState.cards} socket={socket} />
