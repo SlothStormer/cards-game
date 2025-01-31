@@ -1,9 +1,10 @@
 <script lang="ts">
-    import { onMount } from "svelte";
+  import { onMount } from "svelte";
+  import { globalState, playerState } from "./state/state.svelte";
   import Admin from "./lib/admin/Admin.svelte";
   import Game from "./lib/game/Game.svelte";
   import Home from "./lib/home/Home.svelte";
-  import { globalState } from "./state/state.svelte";
+  import Deck from "./lib/deck/Deck.svelte";
 
   onMount(() => {
     if (localStorage.getItem("page")) {
@@ -11,11 +12,15 @@
     } else {
       globalState.page = "home";
     }
+
+    if (localStorage.getItem("savedDeck")) {
+      playerState.savedDeck = JSON.parse(localStorage.getItem("savedDeck") as string);
+    }
   });
 
   function changePage(page: string) {
     globalState.page = page;
-    localStorage.setItem("page", page)
+    localStorage.setItem("page", page);
   }
 </script>
 
@@ -26,6 +31,11 @@
         onclick={() => changePage("home")}
         class="bg-gray-500 p-2 rounded-md hover:bg-gray-700 cursor-pointer"
         >Inicio</button
+      >
+      <button
+        onclick={() => changePage("deck")}
+        class="bg-gray-500 p-2 rounded-md hover:bg-gray-700 cursor-pointer"
+        >Deck</button
       >
       <button
         onclick={() => changePage("game")}
@@ -41,6 +51,8 @@
   </nav>
   {#if globalState.page === "home"}
     <Home bind:page={globalState.page} />
+  {:else if globalState.page === "deck"}
+    <Deck />
   {:else if globalState.page === "game"}
     <Game />
   {:else if globalState.page === "admin"}

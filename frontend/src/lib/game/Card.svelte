@@ -51,21 +51,24 @@
         let dragInfo = JSON.parse(e.dataTransfer?.getData("text/plain"));
         if (dragInfo.posX === posX && dragInfo.posY === posY) return;
 
-        let place = gameState.data[posY][posX];
-
-        if (Object.keys(place.card).length === 0) {
-            console.log("la zona no tiene carta")
+        if (Object.keys(gameState.data[posY][posX].card).length === 0) {
             gameState.data[posY][posX] = dragInfo.data;
         }
         else {
-            console.log("la zona tiene carta")
-            gameState.data[posY][posX].stack.push(dragInfo.data.card);
+            if (gameState.data[posY][posX].stack.length < 3) {
+                console.log("pushing");
+                gameState.data[posY][posX].stack.push(dragInfo.data.card);
+            }
+            else {
+                console.log("stack full");
+                return;
+            }
         }
 
         if (dragInfo.posY != -1) {
             gameState.data[dragInfo.posY][dragInfo.posX] = { card: {}, stack: [] };
         } else {
-            playerState.cards.splice(dragInfo.posX, 1);
+            playerState.savedDeck.splice(dragInfo.posX, 1);
         }
 
         if (!socket) return;
@@ -172,22 +175,22 @@
     </div>
 {:else if size === "large"}
     <div class="border h-96 rounded-lg" style="aspect-ratio: 2/3;">
-        {#if data}
+        {#if data.card}
             <div class="bg-fuchsia-950 h-full rounded-lg select-none">
                 <div class="flex flex-col gap-2">
-                    <span class="">{data.title}</span>
+                    <span class="">{data.card.title}</span>
                     <div class="flex justify-between">
-                        <span class="">{data.type}</span>
-                        <span class="">{data.element}</span>
+                        <span class="">{data.card.type}</span>
+                        <span class="">{data.card.element}</span>
                     </div>
-                    <img src={data.img} alt="" draggable="false" />
-                    <span class="text-xs text-left">{data.description}</span>
+                    <img src={data.card.img} alt="" draggable="false" />
+                    <span class="text-xs text-left">{data.card.description}</span>
                     <div class="flex justify-between">
-                        {#if data.atk}
-                            <span>ATK {data.atk}</span>
+                        {#if data.card.atk}
+                            <span>ATK {data.card.atk}</span>
                         {/if}
-                        {#if data.vid}
-                            <span>VID {data.vid}</span>
+                        {#if data.card.vid}
+                            <span>VID {data.card.vid}</span>
                         {/if}
                     </div>
                 </div>

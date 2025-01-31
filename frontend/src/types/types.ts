@@ -1,4 +1,5 @@
 export interface CardType {
+    number: number;
     title: string;
     description: string;
     img: string;
@@ -7,4 +8,5 @@ export interface CardType {
     atk: number;
     vid: number;
     _id: string;
+    __v: number;
 }

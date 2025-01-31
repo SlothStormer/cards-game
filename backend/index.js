@@ -14,6 +14,7 @@ const io = new Server(server, {
     },
 });
 
+app.use(express.static("../frontend/dist"));
 app.use(cors());
 app.use(express.json());
 app.use(bodyParser.urlencoded({
@@ -107,7 +108,7 @@ io.on("connection", (socket) => {
     });
 });
 
-app.get("/", async (req, res) => {
+app.get("/api", async (req, res) => {
     try {
         const cards = await Card.find()
         res.send(cards);
@@ -117,10 +118,11 @@ app.get("/", async (req, res) => {
     }
 });
 
-app.post("/", async (req, res) => {
+app.post("/api", async (req, res) => {
     try {
         console.log(req.body);
         const card = new Card({
+            number: req.body.number,
             title: req.body.title,
             type: req.body.type,
             element: req.body.element,
@@ -140,9 +142,10 @@ app.post("/", async (req, res) => {
     }
 });
 
-app.put("/:id", async (req, res) => {
+app.put("/api/:id", async (req, res) => {
     try {
         const card = await Card.findById(req.params.id);
+        card.number = req.body.number;
         card.title = req.body.title;
         card.type = req.body.type;
         card.element = req.body.element;
@@ -161,7 +164,7 @@ app.put("/:id", async (req, res) => {
     }
 });
 
-app.delete("/:id", async (req, res) => {
+app.delete("/api/:id", async (req, res) => {
     try {
         const card = await Card.findByIdAndDelete(req.params.id);
         res.send({

@@ -1,20 +1,39 @@
 <script lang="ts">
-    let { data, previewCard = $bindable() } = $props();
+    import { playerState } from "../../state/state.svelte";
 
-    function showCard() {
-        previewCard = data;
-        window.scrollTo({
-            top: 0,
-            left: 0,
-            behavior: "smooth",
-        });
+    let { data } = $props();
+
+    function addCard() {
+        console.log(data._id)
+        const stackCount = playerState.savedDeck.filter((card) => card.card._id === data._id).length;
+        const inventoryCount = playerState.savedDeck.filter((card) => card.card.type === "Inventario").length;
+        const coreCount = 15;
+
+        const monsterCount = playerState.savedDeck.length - inventoryCount - coreCount;
+        
+        if (playerState.savedDeck.length >= 35) {
+            alert("No puedes tener más de 35 cartas en el mazo");
+            return;
+        }
+    
+        if (stackCount > 2 ) {
+            alert("No puedes repetir más de 3 veces una carta");
+            return;
+        }  
+
+        if (monsterCount > 6) {
+            alert("No puedes tener más de 7 monstruos en el mazo");
+            return;
+        }
+
+        playerState.savedDeck.push({ card: data, stack: [] });
     }
 </script>
 
 <div
-    class=" border border-white/50 w-72 max-w-sm bg-purple-900 shadow-lg rounded-lg overflow-hidden"
-    onclick={showCard}
+    class=" border border-white/50 w-72 max-w-sm bg-purple-900 shadow-lg rounded-lg overflow-hidden select-none"
     aria-hidden="true"
+    onclick={addCard}
 >
     <div class="relative h-48 m-2 rounded-md">
         <img src={data.img ? data.img : "placeholder-square.jpg"} alt="Card" class="w-full h-full object-cover rounded-md" />

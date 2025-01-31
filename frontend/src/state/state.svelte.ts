@@ -5,33 +5,213 @@ export const globalState = $state({
     serverIP: "http://localhost:3000",
     username: "",
     page: "home",
-    cards: [
-        {
-            card: {
-                title: "Skorpidus, el Azote del pantano",
-                type: "Insecto, Normal, Efecto",
-                element: "Tierra",
-                img: "https://cdn.discordapp.com/attachments/812955771046068225/1331797645420789780/image.png?ex=67958fb6&is=67943e36&hm=b4caf2b2af547e4ed2507ea33629ada8b43a8ffc6a0b9cae56600498558ab716&",
-                description:
-                    'Cada que vez que esta carta, luego de atacar a otra, le deja una marca de "Infeccion Cronica". La carta afectada con "Infeccion Cronica" recibe 400 extra de daño que cuenta como daño de efecto. Cada vez que una Carta de tipo Insecto, luego de atacar a una carta afectada por "Infeccion Cronica", le suma una marca mas',
-                atk: 1500,
-                vid: 700,
-            },
-            stack: []
-        },
-        { card: { title: "Carta 2", type: "Insecto, Normal, Efecto", }, stack: [], },
-        { card: { title: "Carta 3", type: "Insecto, Normal, Efecto", }, stack: [], },
-        { card: { title: "Carta 4", type: "Insecto, Normal, Efecto", }, stack: [], },
-        { card: { title: "Carta 5", type: "Insecto, Normal, Efecto", }, stack: [], },
-        { card: { title: "Carta 6", type: "Insecto, Normal, Efecto", }, stack: [], },
-    ]
 });
 
 export const playerState = $state({
     username: "",
     subMenuFocus: 'calc',
-    cards: [...globalState.cards],
+    deckCount: new Map(),
+    savedDeck: [{
+        card: {
+            _id: "679bbc33abe52e80b9aeb518",
+            number: 0,
+            title: "Nucleo Simple",
+            type: "",
+            element: "Nucleo",
+            img: "/Nucleo simple.webp",
+            description: "",
+            atk: 0,
+            vid: 0,
+            __v: 0
+        }, stack: [],
+    }, {
+        card: {
+            _id: "679bbc33abe52e80b9aeb518",
+            number: 0,
+            title: "Nucleo Simple",
+            type: "",
+            element: "Nucleo",
+            img: "/Nucleo simple.webp",
+            description: "",
+            atk: 0,
+            vid: 0,
+            __v: 0
+        }, stack: [],
+    }, {
+        card: {
+            _id: "679bbc33abe52e80b9aeb518",
+            number: 0,
+            title: "Nucleo Simple",
+            type: "",
+            element: "Nucleo",
+            img: "/Nucleo simple.webp",
+            description: "",
+            atk: 0,
+            vid: 0,
+            __v: 0
+        }, stack: [],
+    }, {
+        card: {
+            _id: "679bbc33abe52e80b9aeb518",
+            number: 0,
+            title: "Nucleo Simple",
+            type: "",
+            element: "Nucleo",
+            img: "/Nucleo simple.webp",
+            description: "",
+            atk: 0,
+            vid: 0,
+            __v: 0
+        }, stack: [],
+    }, {
+        card: {
+            _id: "679bbc33abe52e80b9aeb518",
+            number: 0,
+            title: "Nucleo Simple",
+            type: "",
+            element: "Nucleo",
+            img: "/Nucleo simple.webp",
+            description: "",
+            atk: 0,
+            vid: 0,
+            __v: 0
+        }, stack: [],
+    }, {
+        card: {
+            _id: "679bbc74abe52e80b9aeb524",
+            number: 0,
+            title: "Nucleo Doble",
+            type: "",
+            element: "Nucleo",
+            img: "/Nucleo doble.webp",
+            description: "",
+            atk: 0,
+            vid: 0,
+            __v: 0
+        }, stack: [],
+    }, {
+        card: {
+            _id: "679bbc74abe52e80b9aeb524",
+            number: 0,
+            title: "Nucleo Doble",
+            type: "",
+            element: "Nucleo",
+            img: "/Nucleo doble.webp",
+            description: "",
+            atk: 0,
+            vid: 0,
+            __v: 0
+        }, stack: [],
+    }, {
+        card: {
+            _id: "679bbc74abe52e80b9aeb524",
+            number: 0,
+            title: "Nucleo Doble",
+            type: "",
+            element: "Nucleo",
+            img: "/Nucleo doble.webp",
+            description: "",
+            atk: 0,
+            vid: 0,
+            __v: 0
+        }, stack: [],
+    }, {
+        card: {
+            _id: "679bbc74abe52e80b9aeb524",
+            number: 0,
+            title: "Nucleo Doble",
+            type: "",
+            element: "Nucleo",
+            img: "/Nucleo doble.webp",
+            description: "",
+            atk: 0,
+            vid: 0,
+            __v: 0
+        }, stack: [],
+    }, {
+        card: {
+            _id: "679bbc74abe52e80b9aeb524",
+            number: 0,
+            title: "Nucleo Doble",
+            type: "",
+            element: "Nucleo",
+            img: "/Nucleo doble.webp",
+            description: "",
+            atk: 0,
+            vid: 0,
+            __v: 0
+        }, stack: [],
+    },{
+        card: {
+            _id: "679bbc89abe52e80b9aeb528",
+            number: 0,
+            title: "Nucleo Triple",
+            type: "",
+            element: "Nucleo",
+            img: "/Nucleo triple.webp",
+            description: "",
+            atk: 0,
+            vid: 0,
+            __v: 0
+        }, stack: [],
+    },{
+        card: {
+            _id: "679bbc89abe52e80b9aeb528",
+            number: 0,
+            title: "Nucleo Triple",
+            type: "",
+            element: "Nucleo",
+            img: "/Nucleo triple.webp",
+            description: "",
+            atk: 0,
+            vid: 0,
+            __v: 0
+        }, stack: [],
+    },{
+        card: {
+            _id: "679bbc89abe52e80b9aeb528",
+            number: 0,
+            title: "Nucleo Triple",
+            type: "",
+            element: "Nucleo",
+            img: "/Nucleo triple.webp",
+            description: "",
+            atk: 0,
+            vid: 0,
+            __v: 0
+        }, stack: [],
+    },{
+        card: {
+            _id: "679bbc89abe52e80b9aeb528",
+            number: 0,
+            title: "Nucleo Triple",
+            type: "",
+            element: "Nucleo",
+            img: "/Nucleo triple.webp",
+            description: "",
+            atk: 0,
+            vid: 0,
+            __v: 0
+        }, stack: [],
+    },{
+        card: {
+            _id: "679bbc89abe52e80b9aeb528",
+            number: 0,
+            title: "Nucleo Triple",
+            type: "",
+            element: "Nucleo",
+            img: "/Nucleo triple.webp",
+            description: "",
+            atk: 0,
+            vid: 0,
+            __v: 0
+        }, stack: [],
+    }],
 });
+
+
+
+
 
 export const gameState = $state({
     player1: "",

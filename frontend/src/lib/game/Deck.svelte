@@ -13,7 +13,7 @@
         let dragInfo = JSON.parse(e.dataTransfer?.getData("text/plain"));
         gameState.data[dragInfo.posY][dragInfo.posX] = { card: {}, stack: [] };
 
-        playerState.cards.push(dragInfo.data);
+        playerState.savedDeck.push(dragInfo.data);
         if (!socket) return;
         socket.emit("update-board", gameState);
     }

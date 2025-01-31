@@ -9,7 +9,6 @@
     import { onDestroy, onMount } from "svelte";
 
     let socket = io(globalState.serverIP);
-    let firstPlayer = $state(true);
 
     onMount(() => {
         socket.emit("player-join", { username: playerState.username });
@@ -59,6 +58,6 @@
                 {/if}
             </div>
         </div>
-        <Deck cards={playerState.cards} socket={socket} />
+        <Deck cards={playerState.savedDeck} socket={socket} />
     </div>
 </main>
