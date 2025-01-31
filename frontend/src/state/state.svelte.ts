@@ -1,4 +1,4 @@
-import { type CardType } from "../types/types";
+import { type CardType, type PlayerState } from "../types/types";
 
 export const globalState = $state({
     focusedCard: "",
@@ -7,10 +7,11 @@ export const globalState = $state({
     page: "home",
 });
 
-export const playerState = $state({
+export const playerState: PlayerState = $state({
     username: "",
     subMenuFocus: 'calc',
     deckCount: new Map(),
+    hand: [],
     savedDeck: [{
         card: {
             _id: "679bbc33abe52e80b9aeb518",

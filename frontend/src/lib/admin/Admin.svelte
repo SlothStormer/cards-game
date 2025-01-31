@@ -21,13 +21,13 @@
     });
 
     async function getCards() {
-        const response = await fetch("http://181.26.215.143/api");
+        const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api`);
         cards = await response.json();
         cards.sort((a, b) => a.number - b.number);  
     }
 
     async function addCard() {
-        const response = await fetch("http://181.26.215.143/api", {
+        const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -51,7 +51,7 @@
 
     async function updateCard() {
         const response = await fetch(
-            `http://181.26.215.143/api/${previewCard._id}`,
+            `${import.meta.env.VITE_BACKEND_URL}/api/${previewCard._id}`,
             {
                 method: "PUT",
                 headers: {
@@ -77,7 +77,7 @@
 
     async function deleteCard() {
         const response = await fetch(
-            `http://181.26.215.143/api/${previewCard._id}`,
+            `${import.meta.env.VITE_BACKEND_URL}/api/${previewCard._id}`,
             {
                 method: "DELETE",
             },

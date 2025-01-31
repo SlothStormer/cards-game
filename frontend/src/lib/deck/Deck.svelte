@@ -8,13 +8,13 @@
     let cards = $state<CardType[]>([]);
 
     onMount(async () => {
-        const response = await fetch("http://181.26.215.143/api");
+        const response = await fetch(import.meta.env.VITE_BACKEND_URL + "/api");
         cards = await response.json();
         cards.sort((a, b) => a.number - b.number);
         cards = cards.slice(3);
     });
 
-    function getsavedDeckCount(savedDeck: any) {
+    function getSavedDeckCount(savedDeck: any) {
         let countMap = new Map();
         savedDeck.forEach(({ card }: any) => {
             countMap.set(card._id, (countMap.get(card._id) || 0) + 1);
@@ -26,11 +26,12 @@
         }));
     }
 
-    function savesavedDeck() {
+    function saveSavedDeck() {
         localStorage.setItem("savedDeck", JSON.stringify(playerState.savedDeck));
+        localStorage.setItem("savedHand", JSON.stringify(playerState.hand));
     }
 
-    function cleansavedDeck() {
+    function cleanSavedDeck() {
         playerState.savedDeck = [
             {
                 card: {
@@ -260,7 +261,7 @@
         ];
     }
 
-    function importsavedDeck() {
+    function importSavedDeck() {
         const file = (document.getElementById("savedDeck-file") as HTMLInputElement)
             .files?.[0];
         if (!file) {
@@ -297,7 +298,7 @@
         };
     }
 
-    function exportsavedDeck() {
+    function exportSavedDeck() {
         const savedDeck = JSON.stringify(playerState.savedDeck);
         const blob = new Blob([savedDeck], { type: "text/plain" });
         const url = URL.createObjectURL(blob);
@@ -311,19 +312,28 @@
 
 <div class="bg-neutral-900 flex flex-row justify-evenly">
     <div class="bg-neutral-900">
-        <p>Creación de Mazo</p>
-        <p>
-            x5 cartas de Núcleo simple, x5 cartas de Núcleo doble, x5 cartas de
-            Núcleo triple
-        </p>
-        <p>
-            15 a 25 Cartas de inventario, se pueden repetir como máximo 3 veces
-            una carta
-        </p>
+        <ul>
+            <li>Creación de Mazo</li>
+            <li>
+                x5 cartas de Núcleo simple, x5 cartas de Núcleo doble, x5 cartas
+                de Núcleo triple
+            </li>
+            <li>
+                15 a 25 Cartas de inventario, se pueden repetir como máximo 3 veces
+                una carta
+            </li>
+        </ul>
 
-        {playerState.savedDeck.length} / 35
+        <p>Cartas en mano {playerState.hand.length} / 7</p>
         <div>
-            {#each getsavedDeckCount(playerState.savedDeck) as { card, count }}
+            {#each playerState.hand as {card}, count }
+                <Item item={card} />
+            {/each}
+        </div>
+
+        <p>Cartas de inventario {playerState.savedDeck.length} / 35</p>
+        <div>
+            {#each getSavedDeckCount(playerState.savedDeck) as { card, count }}
                 <Item item={card} {count} />
             {/each}
         </div>
@@ -331,16 +341,16 @@
             <div>
                 <button
                     class="bg-purple-500 rounded-md px-2 py-1"
-                    onclick={savesavedDeck}>Guardar Mazo</button
+                    onclick={saveSavedDeck}>Guardar Mazo</button
                 >
                 <button
                     class="bg-purple-500 rounded-md px-2 py-1"
-                    onclick={cleansavedDeck}>Limpiar Mazo</button
+                    onclick={cleanSavedDeck}>Limpiar Mazo</button
                 >
             </div>
             <button
                 class="bg-purple-500 rounded-md px-2 py-1"
-                onclick={exportsavedDeck}>Exportar Mazo</button
+                onclick={exportSavedDeck}>Exportar Mazo</button
             >
             <div class="flex flex-row justify-center items-center">
                 <input
@@ -351,7 +361,7 @@
                 />
                 <button
                     class="bg-purple-600 ml-1 rounded-md h-12 px-2"
-                    onclick={importsavedDeck}>Importar Mazo</button
+                    onclick={importSavedDeck}>Importar Mazo</button
                 >
             </div>
         </div>

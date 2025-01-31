@@ -10,3 +10,11 @@ export interface CardType {
     _id: string;
     __v: number;
 }
+
+export interface PlayerState {
+    username: string;
+    subMenuFocus: string;
+    deckCount: Map<string, number>;
+    hand: { card: CardType; stack: CardType[] }[];
+    savedDeck: { card: CardType; stack: CardType[] }[];
+}

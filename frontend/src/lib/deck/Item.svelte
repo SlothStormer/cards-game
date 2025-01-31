@@ -1,9 +1,10 @@
 <script lang="ts">
     import { playerState } from "../../state/state.svelte";
 
-    let { item, count } = $props();
+    let { item, count = 0 } = $props();
 
     console.log("Cuenta", count)
+    console.log(item)
 
     function deleteItem() {
         if (item.element === "Nucleo") {
@@ -12,10 +13,14 @@
         }
         console.log("eliminando uno de:", item._id);
 
-        // Encontramos el índice del primer item con el mismo _id
+        const monsterIndex = playerState.hand.findIndex(handItem => handItem.card._id === item._id);
+
+        if (monsterIndex !== -1) {
+            playerState.hand.splice(monsterIndex, 1);  // Elimina solo el primer item encontrado
+        }
+
         const index = playerState.savedDeck.findIndex(savedDeckItem => savedDeckItem.card._id === item._id);
 
-        // Si encontramos el item en el array, lo eliminamos
         if (index !== -1) {
             playerState.savedDeck.splice(index, 1);  // Elimina solo el primer item encontrado
         }

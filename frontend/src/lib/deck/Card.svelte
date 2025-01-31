@@ -10,6 +10,23 @@
         const coreCount = 15;
 
         const monsterCount = playerState.savedDeck.length - inventoryCount - coreCount;
+
+        // find if card is a Monster card
+        if (data.type != "Inventario" && data.type != "Núcleo Simple" && data.type != "Núcleo Doble" && data.type != "Núcleo Triple") {
+            console.log("monster");
+            if (playerState.hand.length > 6) {
+                alert("No puedes tener más de 7 monstruos en el mazo");
+                return;
+            }
+
+            if (playerState.hand.filter((card) => card.card._id === data._id).length > 0) {
+                alert("No puedes repetir un mounstro");
+                return;
+            }
+
+            playerState.hand.push({ card: data, stack: [] });
+            return;
+        }
         
         if (playerState.savedDeck.length >= 35) {
             alert("No puedes tener más de 35 cartas en el mazo");

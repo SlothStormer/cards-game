@@ -16,6 +16,10 @@
     if (localStorage.getItem("savedDeck")) {
       playerState.savedDeck = JSON.parse(localStorage.getItem("savedDeck") as string);
     }
+
+    if (localStorage.getItem("savedHand")) {
+      playerState.hand = JSON.parse(localStorage.getItem("savedHand") as string);
+    }
   });
 
   function changePage(page: string) {
