@@ -7,16 +7,25 @@
 
     import { io } from "socket.io-client";
     import { onDestroy, onMount } from "svelte";
+    import Item from "./Item.svelte";
 
     let socket = io(globalState.serverIP);
 
     onMount(() => {
-        socket.emit("player-join", { username: playerState.username });
+        socket.emit("player-join", { username: playerState.username, deck: playerState.savedDeck, hand: playerState.hand });
         socket.on("update-board", (data) => {
             gameState.data = data.data;
             gameState.player1 = data.player1;
             gameState.player2 = data.player2;
             console.log("Tablero recibido:", data);
+
+            if (data.player1.username === playerState.username) {
+                playerState.savedDeck = data.player1.deck;
+                playerState.hand = data.player1.hand;
+            } else if (data.player2.username === playerState.username) {
+                playerState.savedDeck = data.player2.deck;
+                playerState.hand = data.player2.hand;
+            }
         });
     });
 
@@ -55,9 +64,14 @@
                     CALCULADORA
                 {:else if playerState.subMenuFocus === "apil"}
                     APILADAS
+                    if
+                    
+                    {#each globalState.focusedStack as card}
+                        <Item item={card} />
+                    {/each}
                 {/if}
             </div>
         </div>
-        <Deck cards={playerState.savedDeck} socket={socket} />
+        <Deck cards={playerState.hand} socket={socket} />
     </div>
 </main>

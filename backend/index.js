@@ -23,8 +23,16 @@ app.use(bodyParser.urlencoded({
 connectToDatabase();
 
 let gameState = {
-    player1: "",
-    player2: "",
+    player1: {
+        username: "",
+        deck: [],
+        hand: [],
+    },
+    player2: {
+        username: "",
+        deck: [],
+        hand: [],
+    },
     turn: 1,
     row: 6,
     col: 7,
@@ -88,18 +96,27 @@ let gameState = {
 
 io.on("connection", (socket) => {
     socket.on("player-join", (data) => {
-        console.log("Jugador", data.username, "conectado, id:", socket.id);
-        if (gameState.player1 == "") {
-            gameState.player1 = data.username;
-        } else if (gameState.player2 == "") {
-            gameState.player2 = data.username;
+        console.log("Jugador", data, "conectado, id:", socket.id);
+        if (gameState.player1.username == "") {
+            gameState.player1 = data;
+        } else if (gameState.player2.username == "") {
+            gameState.player2 = data;
         }
         socket.emit("update-board", gameState);
     });
 
-    socket.on("update-board", (board) => {
-        console.log("Jugador", socket.id, "envio board:", board);
-        gameState = board;
+    socket.on("update-board", (data) => {
+        console.log(gameState)        
+        if (data.playerState.username === gameState.player1.username) {
+            gameState.player1.deck = data.playerState.deck;
+            gameState.player1.hand = data.playerState.hand;
+        } else if (data.playerState.username === gameState.player2.username) {
+            gameState.player2.deck = data.playerState.deck;
+            gameState.player2.hand = data.playerState.hand;
+        }
+
+        gameState.data = data.gameState.data;
+        
         io.emit("update-board", gameState);
     });
 

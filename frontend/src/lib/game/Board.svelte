@@ -1,11 +1,11 @@
 <script lang="ts">
     let { socket = null } = $props();
-    import { gameState } from "../../state/state.svelte";
+    import { gameState, playerState } from "../../state/state.svelte";
     import Card from "./Card.svelte";
 
     let defaults = [
         "Desterrados",
-        "Mazo",
+        `Mazo`,
         "Cementerio",
         "Extra Deck",
         "Campo",

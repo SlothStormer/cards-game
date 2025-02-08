@@ -13,6 +13,10 @@
       globalState.page = "home";
     }
 
+    if (localStorage.getItem("username")) {
+      playerState.username = localStorage.getItem("username") as string;
+    }
+
     if (localStorage.getItem("savedDeck")) {
       playerState.savedDeck = JSON.parse(localStorage.getItem("savedDeck") as string);
     }

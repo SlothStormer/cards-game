@@ -13,9 +13,9 @@
         let dragInfo = JSON.parse(e.dataTransfer?.getData("text/plain"));
         gameState.data[dragInfo.posY][dragInfo.posX] = { card: {}, stack: [] };
 
-        playerState.savedDeck.push(dragInfo.data);
+        playerState.hand.push(dragInfo.data);
         if (!socket) return;
-        socket.emit("update-board", gameState);
+        socket.emit("update-board", {gameState, playerState});
     }
 </script>
 

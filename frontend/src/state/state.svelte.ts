@@ -1,9 +1,9 @@
 import { type CardType, type PlayerState } from "../types/types";
 
 export const globalState = $state({
-    focusedCard: "",
+    focusedCard: {},
+    focusedStack: { card: {}, stack: [], posX: -2, posY: -2 },
     serverIP: "http://localhost:3000",
-    username: "",
     page: "home",
 });
 
@@ -210,13 +210,17 @@ export const playerState: PlayerState = $state({
     }],
 });
 
-
-
-
-
 export const gameState = $state({
-    player1: "",
-    player2: "",
+    player1: {
+        username: "",
+        deck: [],
+        hand: [],
+    },
+    player2: {
+        username: "",
+        deck: [],
+        hand: [],
+    },
     turn: 1,
     rows: 6,
     cols: 7,

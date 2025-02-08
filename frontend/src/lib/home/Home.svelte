@@ -8,6 +8,7 @@
         console.log(ip);
         globalState.serverIP = ip;
         playerState.username = username;
+        localStorage.setItem("username", username);
         page = "game";
     }
 </script>
